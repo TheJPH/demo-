@@ -16,21 +16,21 @@ public class IndexController {
     private UserMapper userMapper;
 
 
-@GetMapping("/")
-    public String index(HttpServletRequest request){
-    Cookie[] cookies = request.getCookies();
-    for (Cookie cookie : cookies) {
-        if (cookie.getName().equals("token")){
-            String token = cookie.getValue();
-            User user = userMapper.findByToken(token);
-            if (user != null){
-                request.getSession().setAttribute("user",user);
+    @GetMapping("/")
+    public String index(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("token")) {
+                String token = cookie.getValue();
+                User user = userMapper.findByToken(token);
+                if (user != null) {
+                    request.getSession().setAttribute("user", user);
+                }
+                break;
             }
-            break;
+
         }
 
+        return "index";
     }
-
-    return "index";
-}
 }
