@@ -1,23 +1,18 @@
 package com.example.demo.model;
 
 public class User {
-    private Integer id;
+    private int id;
     private String name;
     private String accountId;
     private String token;
     private Long gmtCreate;
+    private Long gmtModified;
 
-    public Long getGmtCreate() {
-        return gmtCreate;
-    }
-
-    private Long gmtmodified;
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -45,7 +40,7 @@ public class User {
         this.token = token;
     }
 
-    public Long getGmtCreate(long l) {
+    public Long getGmtCreate() {
         return gmtCreate;
     }
 
@@ -53,11 +48,11 @@ public class User {
         this.gmtCreate = gmtCreate;
     }
 
-    public Long getGmtmodified() {
-        return gmtmodified;
+    public Long getGmtModified() {
+        return gmtModified;
     }
 
-    public void setGmtmodified(Long gmtmodified) {
-        this.gmtmodified = gmtmodified;
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }
