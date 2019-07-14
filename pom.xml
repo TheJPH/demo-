@@ -63,6 +63,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.6</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
 
@@ -81,17 +87,18 @@
                     <user>sa</user>
                     <password>123</password>
                 </configuration>
+
                 <dependencies>
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
                         <version>1.4.199</version>
                     </dependency>
+
                     <dependency>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok</artifactId>
                         <version>1.18.6</version>
-
                     </dependency>
                 </dependencies>
             </plugin>
