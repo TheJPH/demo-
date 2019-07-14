@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
+
 @Controller
 public class AuthorizeController {
     @Autowired
@@ -44,7 +45,7 @@ public class AuthorizeController {
         GithubUser githubUser = githubProvider.getUser(accessToken);
         //System.out.println(user.getName());
 
-        if (githubUser != null) {
+        if (githubUser != null && githubUser.getId() != null) {
             //登录成功 写session和cookie
             User user = new User();
             String token = UUID.randomUUID().toString();
@@ -53,10 +54,11 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtModified());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);
             response.addCookie(new Cookie("token", token));
 
-           // request.getSession().setAttribute("user", githubUser);
+            // request.getSession().setAttribute("user", githubUser);
             return "redirect:/";
 
         } else {

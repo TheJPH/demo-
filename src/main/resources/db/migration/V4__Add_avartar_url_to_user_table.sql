@@ -1,0 +1,1 @@
+ALTER TABLE USER ADD if not exists avatar_url VARCHAR(100) NULL;
