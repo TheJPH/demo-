@@ -25,8 +25,8 @@ public class PageinationDTO {
     private Integer totalPage;
 
     //计算得出页数 数组 分为几组
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        if (totalCount % size == 0) {
+    public void setPagination(Integer totalPage, Integer page) {
+      /*  if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
             totalPage = totalCount / size + 1;
@@ -37,8 +37,8 @@ public class PageinationDTO {
         }
         if (page > totalPage) {
             page = totalPage;
-        }
-
+        }*/
+        this.totalPage = totalPage;
         this.page = page;
 
         //页数数组展示
