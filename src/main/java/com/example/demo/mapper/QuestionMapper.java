@@ -1,10 +1,8 @@
 package com.example.demo.mapper;
 
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -26,4 +24,10 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator = #{userId}")
     Integer countByUserId(@Param(value = "userId") int userId);
+
+    @Select("select * from question where id = #{id}")
+    Question getById(@Param(value = "id") Integer id);
+
+    @Update("update question set title=#{title},description=#{description},gmt_modified=#{gmtModified}, tag=#{tag} where id=#{id}")
+    void update(Question question);
 }

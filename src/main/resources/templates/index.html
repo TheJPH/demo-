@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>码农</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/demo.css">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
@@ -14,7 +14,7 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <h2><span aria-hidden="true" class="glyphicon glyphicon-list"></span>发现</h2>
             <hr>
             <div class="media" th:each="question : ${pageination.questions}">
                 <div class="media-left">
@@ -24,7 +24,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{ '/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     <span th:text="${question.description}"></span>
                     <br>
                     <span class="text-desc"><span th:text="${question.commentCount}"></span>回复 <span
@@ -36,27 +38,27 @@
                 <ul class="pagination">
 
                     <li th:if="${pageination.showFirstPage}">
-                        <a href="/?page=1" aria-label="Previous">
+                        <a aria-label="Previous" href="/?page=1">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pageination.showPrevious}">
-                        <a th:href="@{/(page=${pageination.page - 1})}" aria-label="Previous">
+                        <a aria-label="Previous" th:href="@{/(page=${pageination.page - 1})}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-                    <li th:each="page : ${pageination.pages}" th:class="${pageination.page ==page}? 'active':''">
+                    <li th:class="${pageination.page ==page}? 'active':''" th:each="page : ${pageination.pages}">
                         <a th:href="@{/(page=${page})}" th:text="${page}">
 
                         </a>
                     </li>
                     <li th:if="${pageination.showNext}">
-                        <a th:href="@{/(page=${pageination.page + 1})}" aria-label="Previous">
+                        <a aria-label="Previous" th:href="@{/(page=${pageination.page + 1})}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pageination.showEndPage}">
-                        <a th:href="@{/(page=${pageination.totalPage})}" aria-label="Previous">
+                        <a aria-label="Previous" th:href="@{/(page=${pageination.totalPage})}">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>

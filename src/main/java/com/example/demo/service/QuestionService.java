@@ -85,4 +85,26 @@ public class QuestionService {
         pageinationDTO.setQuestions(questionDTOList);
         return pageinationDTO;
     }
+
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.getById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void creatOrUpdate(Question question) {
+        if (question.getId() == null) {
+            //等于空 就创建 提交问题
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        } else {
+            //修改问题  更新
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.update(question);
+        }
+    }
 }

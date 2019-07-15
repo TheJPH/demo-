@@ -1,1 +1,1 @@
-ALTER TABLE USER ADD if not exists avatar_url VARCHAR(100) NULL;
+ALTER TABLE USER ADD avatar_url VARCHAR(100) NULL;

@@ -1,4 +1,4 @@
-CREATE TABLE if not exists question
+CREATE TABLE question
 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50),
@@ -9,5 +9,5 @@ CREATE TABLE if not exists question
     comment_count INT DEFAULT 0,
     view_count INT DEFAULT 0,
     like_count INT DEFAULT 0,
-    tag VARCHAR(255)
+    tag VARCHAR(256)
 );

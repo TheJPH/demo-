@@ -1,10 +1,9 @@
-create table user
+CREATE TABLE USER
 (
-ID int auto_increment primary key not null ,
-ACCOUNT_ID varchar(100),
-NAME varchar(50),
-TOKEN varchar(36),
-GMT_CREATE bigint,
-GMT_MODIFIED bigint
-
-);
+    ID int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ACCOUNT_ID VARCHAR(100),
+    NAME VARCHAR(50),
+    TOKEN VARCHAR(36),
+    GMT_CREATE BIGINT,
+    GMT_MODIFIED BIGINT
+);;
