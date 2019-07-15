@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li th:if="${pageination.showEndPage}">
-                        <a th:href="@{'/profile/'+${section}(page=${pageination.totalPage})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page = ${pageination.totalPage})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
