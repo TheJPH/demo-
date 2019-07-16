@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.QuestionDTO;
-import com.example.demo.mapper.QuestionMapper;;
+;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
 import com.example.demo.service.QuestionService;
@@ -75,7 +75,7 @@ public class publishController {
         question.setTag(tag);
         question.setCreator(user.getId());
         question.setId(id);
-        questionService.creatOrUpdate(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }
