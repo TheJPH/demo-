@@ -4,6 +4,7 @@ import com.example.demo.dto.PageinationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
+import com.example.demo.mapper.QuestionExtMapper;
 import com.example.demo.mapper.QuestionMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Question;
@@ -23,6 +24,8 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PageinationDTO list(Integer page, Integer size) {
         PageinationDTO pageinationDTO = new PageinationDTO();
@@ -130,5 +133,13 @@ public class QuestionService {
             }
 
         }
+    }
+
+    public void incView(Integer id) {
+
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
