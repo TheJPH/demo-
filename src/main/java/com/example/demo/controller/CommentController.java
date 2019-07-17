@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CommentDTO;
-import com.example.demo.mapper.CommentMapper;
+import com.example.demo.dto.CommentCreateDTO;
+import com.example.demo.dto.ResultDTO;
 import com.example.demo.model.Comment;
+import com.example.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,23 +13,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CommentController {
-    @Autowired
-    private CommentMapper commentMapper;
 
-    @ResponseBody
+    @Autowired
+    private CommentService commentService;
+
+    @ResponseBody   //接受json
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO) {
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO) {
 
         Comment comment = new Comment();
-        comment.setParentId(commentDTO.getParentId());
-        comment.setType(commentDTO.getType());
-        comment.setContent(commentDTO.getContent());
+        comment.setParentId(commentCreateDTO.getParentId());
+        comment.setType(commentCreateDTO.getType());
+        comment.setContent(commentCreateDTO.getContent());
         comment.setGmtModified(System.currentTimeMillis());
         comment.setGmtCreate(System.currentTimeMillis());
-        comment.setCommentator(1);
+        comment.setCommentator(1L);
         comment.setLikeCount(0L);
-        commentMapper.insert(comment);
-        return null;
+        commentService.insert(comment);
+        return ResultDTO.okOf();
     }
 
 

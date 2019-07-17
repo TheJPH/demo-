@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.PageinationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
+import com.example.demo.mapper.CommentMapper;
 import com.example.demo.mapper.QuestionExtMapper;
 import com.example.demo.mapper.QuestionMapper;
 import com.example.demo.mapper.UserMapper;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Service
 public class QuestionService {
+
     @Autowired
     private QuestionMapper questionMapper;
     @Autowired
@@ -60,7 +63,7 @@ public class QuestionService {
         return pageinationDTO;
     }
 
-    public PageinationDTO list(int userId, Integer page, Integer size) {
+    public PageinationDTO list(Long userId, Integer page, Integer size) {
         PageinationDTO pageinationDTO = new PageinationDTO();
         Integer totalPage;
         QuestionExample questionExample = new QuestionExample();
@@ -99,7 +102,7 @@ public class QuestionService {
         return pageinationDTO;
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -116,6 +119,9 @@ public class QuestionService {
             //等于空 就创建 提交问题
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             questionMapper.insert(question);
         } else {
             //修改问题  更新
@@ -135,11 +141,13 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
 
         Question question = new Question();
         question.setId(id);
         question.setViewCount(1);
         questionExtMapper.incView(question);
     }
+
+
 }
