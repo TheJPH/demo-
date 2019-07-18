@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CommentCreateDTO;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.QuestionDTO;
+import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Long id, Model model) {
         QuestionDTO questionDTO = questionService.getById(id);
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDTO);
