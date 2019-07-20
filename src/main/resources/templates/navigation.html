@@ -26,22 +26,24 @@
                     <li th:if="${session.user != null}">
                         <a href="/publish">提问</a>
                     </li>
+                    <li><a href="/profile/replies">通知 <span class="badge">11</span></a></li>
                     <li class="dropdown" th:if="${session.user != null}">
-                        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#"
+                        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown"
+                           href="#"
                            role="button">
                             <span th:text="${session.user.getName()}"></span>
-                            <span class="caret"></span></a>
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/questions">我的问题</a></li>
                             <li><a href="/logout">退出登录</a></li>
-
                         </ul>
                     </li>
-                    <li th:if=" ${session.user == null}"><a
-                            href="https://github.com/login/oauth/authorize?client_id=de22b2d47b8a1b812980&redirect_uri=http://localhost:8088/callback&scope=user&state=1"
-                    >登陆</a>
+                    <li th:if=" ${session.user == null}">
+                        <a href="https://github.com/login/oauth/authorize?client_id=de22b2d47b8a1b812980&redirect_uri=http://localhost:8088/callback&scope=user&state=1">
+                            登陆
+                        </a>
                     </li>
-
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
