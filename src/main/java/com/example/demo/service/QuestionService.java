@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CommentDTO;
-import com.example.demo.dto.PageinationDTO;
+import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
-import com.example.demo.mapper.CommentMapper;
 import com.example.demo.mapper.QuestionExtMapper;
 import com.example.demo.mapper.QuestionMapper;
 import com.example.demo.mapper.UserMapper;
@@ -33,8 +31,8 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    public PageinationDTO list(Integer page, Integer size) {
-        PageinationDTO pageinationDTO = new PageinationDTO();
+    public PaginationDTO list(Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
         Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
         if (totalCount % size == 0) {
@@ -49,7 +47,7 @@ public class QuestionService {
         if (page > totalPage) {
             page = totalPage;
         }
-        pageinationDTO.setPagination(totalPage, page);
+        paginationDTO.setPagination(totalPage, page);
         //size*(page-1)
         Integer offset = size * (page - 1);
 
@@ -62,12 +60,12 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        pageinationDTO.setQuestions(questionDTOList);
-        return pageinationDTO;
+        paginationDTO.setData(questionDTOList);
+        return paginationDTO;
     }
 
-    public PageinationDTO list(Long userId, Integer page, Integer size) {
-        PageinationDTO pageinationDTO = new PageinationDTO();
+    public PaginationDTO list(Long userId, Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
@@ -85,7 +83,7 @@ public class QuestionService {
         if (page > totalPage) {
             page = totalPage;
         }
-        pageinationDTO.setPagination(totalPage, page);
+        paginationDTO.setPagination(totalPage, page);
         //size*(page-1)
         Integer offset = size * (page - 1);
         QuestionExample Example = new QuestionExample();
@@ -100,8 +98,8 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        pageinationDTO.setQuestions(questionDTOList);
-        return pageinationDTO;
+        paginationDTO.setData(questionDTOList);
+        return paginationDTO;
     }
 
     public QuestionDTO getById(Long id) {

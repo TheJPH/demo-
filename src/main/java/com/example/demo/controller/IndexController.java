@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PageinationDTO;
+import com.example.demo.dto.PaginationDTO;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +21,8 @@ public class IndexController {
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "5") Integer size) {
 
-        PageinationDTO pageination = questionService.list(page, size);
-        model.addAttribute("pageination", pageination);
+        PaginationDTO pagination = questionService.list(page, size);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 }
