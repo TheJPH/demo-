@@ -56,7 +56,7 @@
                         <!-- 标签头 -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" th:class="${selectCategoryStat.first ? 'active':''}"
-                                th:each="selectCategory:${tags}">
+                                th:each="selectCategory,selectCategoryStat:${tags}">
                                 <a aria-controls="home" data-toggle="tab" role="tab"
                                    th:href="${'#'+selectCategory.categoryName}"
                                    th:text="${selectCategory.categoryName}">

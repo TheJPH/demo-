@@ -36,8 +36,8 @@
                     <h4 class="media-heading">
                         <a th:href="@{ '/question/'+${question.id}}" th:text="${question.title}"></a>
                     </h4>
-                    <span th:text="${question.description}"></span>
-                    <br>
+<!--                    <span th:text="${question.description}"></span>-->
+<!--                    <br>-->
                     <span class="text-desc"><span th:text="${question.commentCount}"></span>回复 • <span
                             th:text="${question.viewCount}"></span>浏览 •<span
                             th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
@@ -57,10 +57,9 @@
                         </a>
                     </li>
                     <li th:class="${pagination.page ==page}? 'active':''" th:each="page : ${pagination.pages}">
-                        <a th:href="@{/(page=${page},search=${search})}" th:text="${page}">
-
-                        </a>
+                        <a th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
                     </li>
+
                     <li th:if="${pagination.showNext}">
                         <a aria-label="Previous" th:href="@{/(page=${pagination.page +1 },search=${search})}">
                             <span aria-hidden="true">&gt;</span>
