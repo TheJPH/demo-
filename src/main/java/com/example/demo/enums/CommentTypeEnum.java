@@ -3,6 +3,7 @@ package com.example.demo.enums;
 public enum CommentTypeEnum {
     QUESTION(1),
     COMMENT(2);
+    private Integer type;
 
     public static boolean isExist(Integer type) {
         for (CommentTypeEnum commentTypeEnum : CommentTypeEnum.values()) {
@@ -16,8 +17,6 @@ public enum CommentTypeEnum {
     public Integer getType() {
         return type;
     }
-
-    private Integer type;
 
     CommentTypeEnum(Integer type) {
         this.type = type;

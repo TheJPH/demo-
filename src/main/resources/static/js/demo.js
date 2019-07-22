@@ -103,7 +103,7 @@ function collapseComments(e) {
                     var commentElement = $("<div/>", {
                         "class": "col-lg-12 col-md-12 col-sm-12 col-xs-12 comments",
                     }).append(mediaElement);
-                    subCommentContainer.append(commentElement);
+                    subCommentContainer.prepend(commentElement);
                 });
                 //展开二级评论
                 comments.addClass("in");

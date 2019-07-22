@@ -37,7 +37,6 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public <response> String callback(@RequestParam(name = "code") String code,
                                       @RequestParam(name = "state") String state,
-                                      HttpServletRequest request,
                                       HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
@@ -47,8 +46,6 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        //System.out.println(user.getName());
-
         if (githubUser != null && githubUser.getId() != null) {
             //登录成功 写session和cookie
             User user = new User();
@@ -58,8 +55,9 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatar_url());
             userService.createOrUpdate(user);
-            response.addCookie(new Cookie("token", token));
-
+            Cookie cookie = new Cookie("token", token);
+            cookie.setMaxAge(60*60*24*30*6);
+            response.addCookie(cookie);
             // request.getSession().setAttribute("user", githubUser);
             return "redirect:/";
 
@@ -74,8 +72,7 @@ public class AuthorizeController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          //Response 设置cookie
-                         HttpServletResponse response
-    ) {
+                         HttpServletResponse response) {
         request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);

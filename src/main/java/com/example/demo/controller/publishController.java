@@ -31,7 +31,6 @@ public class publishController {
         model.addAttribute("tag", question.getTag());
         model.addAttribute("id", question.getId());
         model.addAttribute("tags", TagCache.get());
-
         return "publish";
     }
 
@@ -42,7 +41,7 @@ public class publishController {
     }
 
     @PostMapping("/publish")
-    public <request> String doPublish(
+    public  String doPublish(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "tag", required = false) String tag,

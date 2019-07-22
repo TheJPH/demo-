@@ -17,7 +17,7 @@ public class UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andAccountIdEqualTo(user.getAccountId());
-        List<User> users = userMapper.selectByExample(new UserExample());
+        List<User> users = userMapper.selectByExample(userExample);
 
         if (users.size() == 0) {
             //插入
@@ -35,7 +35,7 @@ public class UserService {
             UserExample example = new UserExample();
             example.createCriteria()
                     .andIdEqualTo(dbUser.getId());
-            userMapper.updateByExampleSelective(updateUser, new UserExample());
+            userMapper.updateByExampleSelective(updateUser, example);
         }
     }
 }
