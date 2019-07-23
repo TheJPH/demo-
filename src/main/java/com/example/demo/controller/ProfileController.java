@@ -40,7 +40,7 @@ public class ProfileController {
             PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
             model.addAttribute("pagination", paginationDTO);
         } else if ("replies".equals(action)) {
-            PaginationDTO paginationDTO = notificationService.list(user.getId(),page,size);
+            PaginationDTO paginationDTO = notificationService.list(user.getId(), page, size);
             model.addAttribute("section", "replies");
             model.addAttribute("pagination", paginationDTO);
             model.addAttribute("sectionName", "最新回复");

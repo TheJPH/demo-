@@ -44,8 +44,11 @@ public class AuthorizeController {
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
+        //获取accestoken值
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
+        //json解析
         GithubUser githubUser = githubProvider.getUser(accessToken);
+
         if (githubUser != null && githubUser.getId() != null) {
             //登录成功 写session和cookie
             User user = new User();
@@ -56,7 +59,8 @@ public class AuthorizeController {
             user.setAvatarUrl(githubUser.getAvatar_url());
             userService.createOrUpdate(user);
             Cookie cookie = new Cookie("token", token);
-            cookie.setMaxAge(60*60*24*30*6);
+            //设定cookie有效时间
+            cookie.setMaxAge(60 * 60 * 24 * 30 * 6);
             response.addCookie(cookie);
             // request.getSession().setAttribute("user", githubUser);
             return "redirect:/";
@@ -70,6 +74,7 @@ public class AuthorizeController {
     }
 
     @GetMapping("/logout")
+    //退出登录
     public String logout(HttpServletRequest request,
                          //Response 设置cookie
                          HttpServletResponse response) {
