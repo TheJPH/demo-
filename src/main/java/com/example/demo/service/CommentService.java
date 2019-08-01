@@ -36,13 +36,25 @@ public class CommentService {
     private NotificationMapper notificationMapper;
 
     @Transactional   //事务标签
+    /**
+     * 添加评论
+     */
     public void insert(Comment comment, User commentator) {
+        /*
+         * id不存在 或 id=0 则不知针对问题还是评论进行评论
+         */
         if (comment.getParentId() == null || comment.getParentId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
+        /*
+        * 评论类型(question(1),comment(2))
+        * */
         if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) {
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
+        /*
+        * 判断评论类型是comment或question
+        * */
         if (comment.getType() == CommentTypeEnum.COMMENT.getType()) {
             //回复评论
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
@@ -57,8 +69,11 @@ public class CommentService {
             commentMapper.insert(comment);
             //增加评论数
             Comment parentComment = new Comment();
+           //添加位置
             parentComment.setId(comment.getParentId());
+            //评论数加1
             parentComment.setCommentCount(1);
+            //评论数
             commentExtMapper.incCommentCount(parentComment);
             //创建通知
             createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT,question.getId());
@@ -68,9 +83,13 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+//            评论数初始 0
             comment.setCommentCount(0);
+//            插入评论
             commentMapper.insert(comment);
+//            评论数+1
             question.setCommentCount(1);
+//            评论数
             questionExtMapper.incCommentCount(question);
 
             //创建通知
@@ -80,12 +99,17 @@ public class CommentService {
 
 
 
+/*
+* 创建通知方法
+* */
 
     private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerId) {
         if (receiver == comment.getCommentator()) {
             return;
         }
-
+/*
+* 创建通知 ( 时间 评论类型 问题id 评论者  通知状态(已读,未读) 通知 通告人姓名 问题头)
+* */
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());
@@ -97,10 +121,12 @@ public class CommentService {
         notification.setOuterTitle(outerTitle);
         notificationMapper.insert(notification);
     }
-
+/*
+* 通过id 和type 进行查找并按创建时间倒叙排列
+*
+* */
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
-
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
                 .andTypeEqualTo(type.getType());

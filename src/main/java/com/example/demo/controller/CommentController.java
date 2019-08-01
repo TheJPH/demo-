@@ -33,6 +33,7 @@ public class CommentController {
         if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())) {
             return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
+        /*存储评论内容,时间,评论(问题,评论)类型,问题id,评论人id 浏览数*/
         Comment comment = new Comment();
         comment.setParentId(commentCreateDTO.getParentId());
         comment.setContent(commentCreateDTO.getContent());
@@ -47,8 +48,10 @@ public class CommentController {
 
     @ResponseBody   //接受json
     @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    /*接受评论json并发送*/
     public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
         List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+       /*放入评论json串*/
         return ResultDTO.okOf(commentDTOS);
     }
 

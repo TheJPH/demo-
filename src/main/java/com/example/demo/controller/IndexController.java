@@ -16,6 +16,11 @@ public class IndexController {
     @Autowired
     private QuestionService questionService;
 
+    /*首页分页
+     * 偏移page 条目数size,
+     * 搜索功能
+     *根据搜索结果显示页面
+     * */
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,

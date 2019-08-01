@@ -24,10 +24,11 @@ public class SessionInterceptor implements HandlerInterceptor {
     private NotificationService notificationService;
     @Value("http://localhost:8088/callback")
     private String redirectUri;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       //设置context级别的属性
-        request.getServletContext().setAttribute("redirectUri",redirectUri);
+        //设置context级别的属性
+        request.getServletContext().setAttribute("redirectUri", redirectUri);
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0)
             for (Cookie cookie : cookies) {
@@ -49,7 +50,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,@Nullable ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
 
     }
 

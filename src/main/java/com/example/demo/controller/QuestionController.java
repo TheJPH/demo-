@@ -24,19 +24,27 @@ public class QuestionController {
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") String id, Model model) {
-        Long questionId = null;
+        Long questionId;
         try {
             questionId = Long.parseLong(id);
-        }catch(NumberFormatException E){
-        throw new CustomizeException(CustomizeErrorCode.INVALID_INPUT);
+        } catch (NumberFormatException E) {
+            throw new CustomizeException(CustomizeErrorCode.INVALID_INPUT);
         }
+        /*获取问题信息*/
         QuestionDTO questionDTO = questionService.getById(questionId);
+
+        /*获取相关问题*/
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
+
+        /*获取问题评论信息*/
         List<CommentDTO> comments = commentService.listByTargetId(questionId, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(questionId);
+        /*问题*/
         model.addAttribute("question", questionDTO);
+        /*评论*/
         model.addAttribute("comments", comments);
+        /*相关问题*/
         model.addAttribute("relatedQuestions", relatedQuestions);
         return "question";
     }

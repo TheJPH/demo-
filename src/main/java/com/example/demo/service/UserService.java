@@ -21,11 +21,12 @@ public class UserService {
 
         if (users.size() == 0) {
             //插入
+            //创建用户
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtModified());
             userMapper.insert(user);
         } else {
-            //更新
+            //更新用户信息
             User dbUser = users.get(0);
             User updateUser = new User();
             updateUser.setGmtModified(System.currentTimeMillis());
