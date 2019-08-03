@@ -22,7 +22,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @ResponseBody   //接受json
+    @ResponseBody   //接受json  响应体
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
