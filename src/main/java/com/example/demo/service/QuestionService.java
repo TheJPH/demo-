@@ -3,14 +3,11 @@ package com.example.demo.service;
 import com.example.demo.dto.PaginationDTO;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.dto.QuestionQueryDTO;
+import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
-import com.example.demo.mapper.QuestionExtMapper;
-import com.example.demo.mapper.QuestionMapper;
-import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.Question;
-import com.example.demo.model.QuestionExample;
-import com.example.demo.model.User;
+import com.example.demo.mapper.*;
+import com.example.demo.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +28,10 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuestionExtMapper questionExtMapper;
+    @Autowired
+    private CommentMapper commentMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     /**
      * 查找问题列表分页
@@ -40,17 +41,20 @@ public class QuestionService {
      * @param size
      * @return
      */
-    public PaginationDTO list(String search, Integer page, Integer size) {
+    public PaginationDTO list(String search, String tag, Integer page, Integer size) {
         if (StringUtils.isNotBlank(search)) {
             String[] tags = StringUtils.split(search, " ");
             search = Arrays.stream(tags).collect(Collectors.joining("|"));
 
         }
 
+
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
         QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
         questionQueryDTO.setSearch(search);
+        questionQueryDTO.setTag(tag);
+
         Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         //确认页数
         if (totalCount % size == 0) {
@@ -162,6 +166,44 @@ public class QuestionService {
         return questionDTO;
     }
 
+    public void deleteById(Long id) {
+        Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
+        CommentExample example = new CommentExample();
+        example.createCriteria().andParentIdEqualTo(id)
+                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+        //找到问题回复
+        List<Comment> comments = commentMapper.selectByExample(example);
+        if (comments != null) {
+            for (Comment comment : comments) {
+                //找到二级评论
+                CommentExample example1 = new CommentExample();
+                example1.createCriteria().andParentIdEqualTo(id)
+                        .andTypeEqualTo(CommentTypeEnum.COMMENT.getType());
+                List<Comment> commentsons = commentMapper.selectByExample(example1);
+                if (commentsons != null) {
+                    //删除二级评论
+                    for (Comment commentson : commentsons) {
+                        //删除二级回复
+                        commentMapper.deleteByPrimaryKey(commentson.getParentId());
+                    }
+                } else {
+                    throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+                }
+                //删除问题回复
+                commentMapper.deleteByPrimaryKey(comment.getId());
+            }
+        } else {
+            throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+        }
+        //删除有关通知
+        notificationMapper.deleteByPrimaryKey(id);
+        //删除问题
+        questionMapper.deleteByPrimaryKey(id);
+    }
+
     /**
      * 创建 更新 问题
      *
@@ -236,4 +278,5 @@ public class QuestionService {
         }).collect(Collectors.toList());
         return questionDTOS;
     }
+
 }

@@ -8,6 +8,7 @@
     <link href="/css/demo.css" rel="stylesheet">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/demo.js"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -35,6 +36,9 @@
                         <a class="demo-menu" th:href="@{'/publish/'+${question.id}}"
                            th:if="${session.user != null && session.user.id == question.creator}">
                             <span aria-hidden="true" class="glyphicon glyphicon-pencil">编辑</span>
+                        </a>
+                        <a class="demo-menu" onclick="deleted()">
+                            <span>删除</span>
                         </a>
                     </span>
                     </div>

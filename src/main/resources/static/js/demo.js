@@ -131,3 +131,41 @@ function selectTag(e) {
         }
     }
 }
+
+//删除问题
+    function deleteById(id) {
+        $.ajax({
+         type: "POST",
+         contentType: 'application/json',
+         url: "/profile/question",
+         data: JSON.stringify({
+            "id": id
+         }),
+        success: function (response) {
+            if (response.code == 200) {
+                alert(response.message);
+                $(".question").load(location.href + ".questions");
+            } else if (response.code == 2003) {
+                alert(response.message)
+            } else {
+                if (response.code == 101) {
+                    var IsAccept = confirm(response.message);
+                    if (IsAccept) {
+                        window.open("https://github.com/login/oauth/authorize?client_id=de22b2d47b8a1b812980&redirect_uri=http://localhost:8088/callback&scope=user&state=1");
+                        window.localStorage.setItem("closable", "true");
+                    }
+                } else {
+                    alert(response.message);
+                }
+            }
+        }
+    })
+}
+
+function deleted() {
+    var IsAccept = confirm("删除该帖子？");
+    if (IsAccept) {
+        var question_id = $("#id").val();
+        deleteById(question_id);
+    }
+}

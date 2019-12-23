@@ -1,16 +1,19 @@
 package com.example.demo.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.dto.PaginationDTO;
+import com.example.demo.dto.QuestionDTO;
+import com.example.demo.dto.ResultDTO;
+import com.example.demo.exception.CustomizeErrorCode;
+import com.example.demo.exception.CustomizeException;
 import com.example.demo.model.User;
 import com.example.demo.service.NotificationService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +26,20 @@ public class ProfileController {
     @Autowired
     private NotificationService notificationService;
 
-    @GetMapping("/profile/{action}")
+    @RequestMapping(value = "/profile/question", method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleted(@RequestBody JSONObject data,
+                          HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect:/";
+        }
+        questionService.deleteById(data.getLong("id"));
+        ResultDTO resultDTO = ResultDTO.errorOf(100, "操作成功");
+        return resultDTO;
+    }
+
+    @RequestMapping(value = "/profile/{action}")
     public String profile(HttpServletRequest request,
                           @PathVariable(name = "action") String action,
                           Model model,
@@ -45,6 +61,7 @@ public class ProfileController {
             model.addAttribute("pagination", paginationDTO);
             model.addAttribute("sectionName", "最新回复");
         }
+
         return "profile";
     }
 }
