@@ -81,7 +81,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <!--        mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>8.0.11</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -96,17 +102,25 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.2.4</version>
                 <configuration>
-                    <url>jdbc:h2:E:/database</url>
-                    <user>sa</user>
-                    <password>123</password>
+<!--                    <url>jdbc:h2:E:/database</url>-->
+<!--                    <user>sa</user>-->
+<!--                    <password>123</password> -->
+                    <url>jdbc:mysql://localhost:3306/community</url>
+                    <user>root</user>
+                    <password>transino;20170501</password>
                 </configuration>
                 <dependencies>
+<!--                    <dependency>-->
+<!--                        <groupId>com.h2database</groupId>-->
+<!--                        <artifactId>h2</artifactId>-->
+<!--                        <version>1.4.199</version>-->
+<!--                    </dependency>-->
                     <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.199</version>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.11</version>
+<!--                        <scope>runtime</scope>-->
                     </dependency>
-
                     <dependency>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok</artifactId>

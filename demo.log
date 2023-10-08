@@ -1,5 +1,5 @@
-2019-07-21 17:43:50.965  INFO 13700 --- [restartedMain] com.example.demo.DemoApplication         : Starting DemoApplication on LAPTOP-7281A1PU with PID 13700 (E:\java\demo\target\classes started by mi in E:\java\demo)
-2019-07-21 17:43:50.969  INFO 13700 --- [restartedMain] com.example.demo.DemoApplication         : No active profile set, falling back to default profiles: default
+2019-07-21 17:43:50.965  INFO 13700 --- [restartedMain] com.example.community.CommunityApplication         : Starting DemoApplication on LAPTOP-7281A1PU with PID 13700 (E:\java\demo\target\classes started by mi in E:\java\demo)
+2019-07-21 17:43:50.969  INFO 13700 --- [restartedMain] com.example.community.CommunityApplication         : No active profile set, falling back to default profiles: default
 2019-07-21 17:43:51.032  INFO 13700 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
 2019-07-21 17:43:51.033  INFO 13700 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
 2019-07-21 17:43:52.291  INFO 13700 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8088 (http)
@@ -15,7 +15,7 @@
 2019-07-21 17:43:52.989  INFO 13700 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
 2019-07-21 17:43:53.258  INFO 13700 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2019-07-21 17:43:53.299  INFO 13700 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8088 (http) with context path ''
-2019-07-21 17:43:53.302  INFO 13700 --- [restartedMain] com.example.demo.DemoApplication         : Started DemoApplication in 2.69 seconds (JVM running for 3.488)
+2019-07-21 17:43:53.302  INFO 13700 --- [restartedMain] com.example.community.CommunityApplication         : Started DemoApplication in 2.69 seconds (JVM running for 3.488)
 2019-07-21 17:44:01.535  INFO 13700 --- [http-nio-8088-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2019-07-21 17:44:01.536  INFO 13700 --- [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2019-07-21 17:44:01.542  INFO 13700 --- [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
